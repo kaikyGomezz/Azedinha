@@ -97,7 +97,7 @@
       justify-content: center;
       text-align: center;
       padding: 1.5rem;
-      pointer-events: none; /* permite clicar no botão, que terá pointer-events ligado */
+      pointer-events: none; /* permite clicar só no botão da música via wrapper */
     }
 
     .name-title {
@@ -349,9 +349,7 @@
     <h1 class="name-title">Pietra</h1>
     <p class="subtitle">UM CANTINHO QUE EXISTE SÓ POR SUA CAUSA</p>
 
-    <!--
-      ⬇️ TROQUE ESSA FRASE SE QUISER
-    -->
+    <!-- ⬇️ TROQUE ESSA FRASE SE QUISER -->
     <p class="main-phrase">
       Aqui as lembranças dançam junto com a sua foto, só pra lembrar que o mundo fica mais bonito quando tem você.
     </p>
@@ -378,8 +376,8 @@
 
   <!--
     ⬇️ ÁUDIO
-    - Coloque o arquivo "musica.mp3" na MESMA pasta do index.html.
-    - Se quiser usar outro nome ou pasta, troque o caminho em src.
+    - Coloque o arquivo de música na MESMA pasta do index.html e RENOMEIE para "musica.mp3"
+      OU ajuste o caminho abaixo pro nome real do arquivo.
   -->
   <audio id="backgroundMusic" loop>
     <source src="musica.mp3" type="audio/mpeg" />
@@ -389,17 +387,19 @@
   <script>
     // ========== FOTOS FLUTUANDO ALEATORIAMENTE ==========
     (function () {
-      // ⬇️ ADICIONE SUAS FOTOS AQUI
-      // LEMBRANDO: elas precisam existir na pasta /img do repositório.
-      const photos = [
-        "img/ft1.jpeg.jpeg",
-        // "img/ft2.jpeg.jpeg",
-        // "img/ft3.jpeg.jpeg",
-      ];
+      // IMPORTANTE:
+      // - Coloque suas 58 fotos na pasta /img
+      // - Com os nomes: ft1.jpeg.jpeg, ft2.jpeg.jpeg, ..., ft58.jpeg.jpeg
+      const photos = [];
+      const totalPhotos = 58; // ⬅️ quantidade de fotos
+
+      for (let i = 1; i <= totalPhotos; i++) {
+        photos.push(`img/ft${i}.jpeg.jpeg`);
+      }
 
       if (!photos.length) return;
 
-      const MAX_PHOTOS_ON_SCREEN = 6;
+      const MAX_PHOTOS_ON_SCREEN = 6; // quantas fotos ao mesmo tempo
       let currentOnScreen = 0;
 
       function createFloatingPhoto() {
