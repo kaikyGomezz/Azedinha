@@ -15,25 +15,19 @@
 
   <style>
     :root {
-      --bg-gradient-start: #0f172a;
-      --bg-gradient-end: #1e293b;
       --accent: #f97399;
       --accent-soft: rgba(249, 115, 153, 0.25);
       --text-main: #f9fafb;
       --text-soft: #e5e7eb;
-      --glass-bg: rgba(15, 23, 42, 0.7);
-      --glass-border: rgba(148, 163, 184, 0.5);
-      --shadow-soft: 0 20px 60px rgba(15, 23, 42, 0.8);
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
-    html,
-    body {
+    html, body {
       height: 100%;
     }
 
@@ -41,14 +35,11 @@
       font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
       background: radial-gradient(circle at top, #1f2937 0, #020617 55%);
       color: var(--text-main);
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: flex-start;
-      overflow-x: hidden;
+      overflow: hidden;
+      position: relative;
     }
 
-    /* Fundo com degradê + elementos decorativos */
+    /* Fundo com orbs suaves */
     .background-layer {
       position: fixed;
       inset: 0;
@@ -72,7 +63,7 @@
       top: -80px;
       left: -60px;
       background: radial-gradient(circle, #fb7185, transparent 60%);
-      animation: floatOrb1 12s ease-in-out infinite alternate;
+      animation: floatOrb1 14s ease-in-out infinite alternate;
     }
 
     .orb-2 {
@@ -84,217 +75,118 @@
       animation: floatOrb2 18s ease-in-out infinite alternate;
     }
 
-    .orb-3 {
-      width: 280px;
-      height: 280px;
-      bottom: 20%;
-      left: 10%;
-      background: radial-gradient(circle, #a855f7, transparent 60%);
-      opacity: 0.35;
-      animation: floatOrb3 20s ease-in-out infinite alternate;
-    }
-
     @keyframes floatOrb1 {
-      0% {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      100% {
-        transform: translate3d(40px, 60px, 0) scale(1.05);
-      }
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(40px, 60px, 0) scale(1.05); }
     }
 
     @keyframes floatOrb2 {
-      0% {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      100% {
-        transform: translate3d(-40px, -30px, 0) scale(1.08);
-      }
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      100% { transform: translate3d(-40px, -30px, 0) scale(1.08); }
     }
 
-    @keyframes floatOrb3 {
-      0% {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      100% {
-        transform: translate3d(0, -40px, 0) scale(0.95);
-      }
-    }
-
-    .hero {
-      min-height: 100vh;
+    /* Conteúdo central (texto) */
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      width: 100vw;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 1.5rem 4rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-inner {
-      width: 100%;
-      max-width: 1120px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-      gap: 3rem;
-      align-items: center;
-    }
-
-    .glass-card {
-      position: relative;
-      background: linear-gradient(to bottom right, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.75));
-      border-radius: 24px;
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--shadow-soft);
-      padding: 2.5rem 2.5rem 2.75rem;
-      overflow: hidden;
-      backdrop-filter: blur(24px);
-    }
-
-    .glass-card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(248, 113, 113, 0.15), transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .glass-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.13), transparent 60%);
-      opacity: 0.9;
-      pointer-events: none;
-    }
-
-    .glass-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .pill-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.4rem 0.85rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      color: var(--text-soft);
-      margin-bottom: 1.4rem;
-    }
-
-    .pill-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 6px rgba(249, 115, 153, 0.35);
+      text-align: center;
+      padding: 1.5rem;
+      pointer-events: none; /* permite clicar no botão, que terá pointer-events ligado */
     }
 
     .name-title {
       font-family: "Great Vibes", cursive;
-      font-size: clamp(3.4rem, 5vw, 4.2rem);
-      line-height: 1.05;
+      font-size: clamp(3.5rem, 7vw, 4.5rem);
       color: #fefce8;
-      text-shadow: 0 14px 45px rgba(15, 23, 42, 0.95);
-      margin-bottom: 0.6rem;
+      text-shadow: 0 16px 50px rgba(15, 23, 42, 0.95);
+      margin-bottom: 0.4rem;
     }
 
     .subtitle {
-      font-size: 0.95rem;
-      letter-spacing: 0.3em;
+      font-size: 0.9rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(226, 232, 240, 0.75);
-      margin-bottom: 1.8rem;
+      color: rgba(226, 232, 240, 0.8);
+      margin-bottom: 1.4rem;
     }
 
     .main-phrase {
-      font-size: 1.05rem;
-      line-height: 1.6;
+      font-size: 1rem;
+      max-width: 32rem;
+      margin: 0 auto 1.8rem;
       color: var(--text-soft);
-      max-width: 28rem;
-      margin-bottom: 1.6rem;
       position: relative;
+      line-height: 1.7;
+    }
+
+    .main-phrase::before,
+    .main-phrase::after {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.25;
+      color: var(--accent);
     }
 
     .main-phrase::before {
       content: "❝";
-      position: absolute;
       left: -1.4rem;
       top: -0.6rem;
-      font-size: 2rem;
-      opacity: 0.35;
-      color: var(--accent);
     }
 
     .main-phrase::after {
       content: "❞";
-      position: absolute;
-      right: -1rem;
-      bottom: -1.3rem;
-      font-size: 1.8rem;
-      opacity: 0.35;
-      color: var(--accent-soft);
+      right: -1.4rem;
+      bottom: -1rem;
     }
 
-    .support-text {
-      font-size: 0.875rem;
-      color: rgba(148, 163, 184, 0.95);
-      max-width: 26rem;
-      margin-bottom: 1.9rem;
-    }
-
-    .actions-row {
+    /* Botão da música */
+    .music-wrapper {
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.6rem;
+      gap: 0.6rem;
+      pointer-events: auto; /* reativa clique só aqui */
     }
 
     .music-button {
-      display: none;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.55rem;
-      padding: 0.8rem 1.4rem;
+      gap: 0.6rem;
+      padding: 0.85rem 1.6rem;
       border-radius: 999px;
       border: 0;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
       background: radial-gradient(circle at top left, #fb7185, #ec4899);
       color: #fdf2f8;
-      box-shadow: 0 8px 25px rgba(236, 72, 153, 0.55);
+      box-shadow: 0 10px 28px rgba(236, 72, 153, 0.55);
       transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
     }
 
-    .music-button.visible {
-      display: inline-flex;
-    }
-
     .music-button:hover {
-      transform: translateY(-1px) scale(1.01);
-      box-shadow: 0 16px 40px rgba(236, 72, 153, 0.7);
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 18px 40px rgba(236, 72, 153, 0.7);
       filter: brightness(1.03);
     }
 
     .music-button:active {
-      transform: translateY(1px) scale(0.99);
-      box-shadow: 0 6px 16px rgba(236, 72, 153, 0.55);
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 6px 18px rgba(236, 72, 153, 0.55);
     }
 
     .music-pulse {
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       border-radius: 999px;
       border: 2px solid rgba(254, 242, 242, 0.85);
       display: flex;
@@ -313,139 +205,28 @@
     }
 
     .music-pulse-inner {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: inherit;
       background: #fef2f2;
     }
 
     @keyframes pulse {
-      0% {
-        transform: scale(0.8);
-        opacity: 0.9;
-      }
-      100% {
-        transform: scale(1.35);
-        opacity: 0;
-      }
+      0% { transform: scale(0.8); opacity: 0.9; }
+      100% { transform: scale(1.4); opacity: 0; }
     }
 
     .hint-text {
-      font-size: 0.75rem;
-      color: rgba(148, 163, 184, 0.9);
+      font-size: 0.76rem;
+      color: rgba(148, 163, 184, 0.95);
     }
 
     .hint-text span {
-      color: rgba(248, 250, 252, 0.95);
+      color: rgba(248, 250, 252, 1);
       font-weight: 500;
     }
 
-    /* Lado das fotos / carrossel */
-    .photo-column {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .photo-frame {
-      width: min(360px, 85vw);
-      aspect-ratio: 3/4;
-      border-radius: 28px;
-      padding: 6px;
-      background: radial-gradient(circle at top, rgba(251, 113, 133, 0.9), rgba(59, 130, 246, 0.7));
-      box-shadow: 0 22px 60px rgba(15, 23, 42, 0.95);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .photo-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 22px;
-      overflow: hidden;
-      position: relative;
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
-      border: 1px solid rgba(148, 163, 184, 0.75);
-      backdrop-filter: blur(16px);
-    }
-
-    .photo-slider {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-
-    .photo-slider img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      opacity: 1;
-      transform: scale(1.02);
-      transition: opacity 1s ease-in-out, transform 1.8s ease-in-out;
-    }
-
-    .photo-slider img.fade-out {
-      opacity: 0;
-      transform: scale(1.03);
-    }
-
-    .photo-slider img.fade-in {
-      opacity: 1;
-      transform: scale(1.07);
-    }
-
-    .photo-overlay-gradient {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(15, 23, 42, 0.68), transparent 40%);
-      mix-blend-mode: multiply;
-      pointer-events: none;
-    }
-
-    .photo-caption {
-      position: absolute;
-      bottom: 1.05rem;
-      left: 1.2rem;
-      right: 1.2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-      z-index: 2;
-    }
-
-    .photo-caption-main {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: rgba(248, 250, 252, 0.96);
-      text-shadow: 0 8px 22px rgba(15, 23, 42, 1);
-    }
-
-    .photo-caption-sub {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: rgba(226, 232, 240, 0.85);
-    }
-
-    .photo-tag {
-      position: absolute;
-      top: 0.9rem;
-      right: 1.1rem;
-      padding: 0.25rem 0.7rem;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      background: rgba(15, 23, 42, 0.9);
-      color: rgba(226, 232, 240, 0.88);
-      border: 1px solid rgba(148, 163, 184, 0.9);
-      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.9);
-    }
-
-    /* Corações / elementos flutuantes */
+    /* Corações / palavras flutuantes de fundo */
     .floating-layer {
       position: fixed;
       inset: 0;
@@ -476,194 +257,82 @@
     }
 
     @keyframes floatUp {
+      0%   { transform: translate3d(0, 40px, 0); opacity: 0; }
+      10%  { opacity: 0.8; }
+      80%  { opacity: 0.9; }
+      100% { transform: translate3d(0, -120vh, 0); opacity: 0; }
+    }
+
+    /* FOTOS FLUTUANDO ALEATORIAMENTE PELA TELA */
+    .photo-floating {
+      position: fixed;
+      object-fit: cover;
+      border-radius: 22px;
+      box-shadow: 0 16px 45px rgba(15, 23, 42, 0.9);
+      opacity: 0;
+      pointer-events: none;
+      filter: saturate(1.1) contrast(1.02);
+      animation-name: floatPhoto;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes floatPhoto {
       0% {
-        transform: translate3d(0, 40px, 0);
         opacity: 0;
+        transform: translate3d(0, 20px, 0) scale(0.96);
       }
-      10% {
-        opacity: 0.8;
+      15% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
       }
-      80% {
-        opacity: 0.9;
+      70% {
+        opacity: 1;
       }
       100% {
-        transform: translate3d(0, -120vh, 0);
         opacity: 0;
+        transform: translate3d(0, -40px, 0) scale(1.03);
       }
     }
 
-    /* Seção de história */
-    .story-section {
-      position: relative;
-      z-index: 1;
-      padding: 0 1.5rem 3.5rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    .story-inner {
-      width: 100%;
-      max-width: 1120px;
-      border-radius: 22px;
-      border: 1px solid rgba(51, 65, 85, 0.95);
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.96));
-      box-shadow: 0 18px 46px rgba(15, 23, 42, 0.9);
-      padding: 2.1rem 2rem 2.4rem;
-      display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 2.2rem;
-    }
-
-    .story-text-title {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(148, 163, 184, 0.95);
-      margin-bottom: 0.4rem;
-    }
-
-    .story-heading {
-      font-size: 1.1rem;
-      color: rgba(248, 250, 252, 0.97);
-      margin-bottom: 0.9rem;
-    }
-
-    .story-text {
-      font-size: 0.9rem;
-      color: rgba(148, 163, 184, 0.95);
-      line-height: 1.7;
-      max-width: 30rem;
-    }
-
-    .story-photos-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.6rem;
-    }
-
-    .story-photo {
-      position: relative;
-      border-radius: 14px;
-      overflow: hidden;
-      background: linear-gradient(to bottom right, rgba(30, 64, 175, 0.6), rgba(219, 39, 119, 0.6));
-      padding: 2px;
-      min-height: 70px;
-    }
-
-    .story-photo-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: 12px;
-      overflow: hidden;
-      background: rgba(15, 23, 42, 0.98);
-      border: 1px solid rgba(51, 65, 85, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.3rem;
-    }
-
-    .story-photo-inner span {
-      font-size: 0.65rem;
-      color: rgba(148, 163, 184, 0.95);
-      text-align: center;
-      line-height: 1.4;
-    }
-
-    .story-photo:nth-child(2) {
-      transform: translateY(10px);
-    }
-
-    .story-photo:nth-child(4) {
-      transform: translateY(-6px);
-    }
-
-    .story-photo:nth-child(6) {
-      transform: translateY(6px);
-    }
-
-    /* Rodapé simples */
+    /* Rodapé */
     .footer {
-      padding: 1rem 1.5rem 1.8rem;
-      font-size: 0.75rem;
+      position: fixed;
+      bottom: 0.7rem;
+      left: 0;
+      right: 0;
       text-align: center;
+      font-size: 0.7rem;
       color: rgba(148, 163, 184, 0.9);
+      z-index: 2;
+      pointer-events: none;
     }
 
     .footer span {
-      color: rgba(248, 250, 252, 0.98);
+      color: rgba(248, 250, 252, 1);
       font-weight: 500;
     }
 
-    /* Responsividade */
-    @media (max-width: 960px) {
-      .hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 2.2rem;
-      }
-
-      .photo-column {
-        order: -1;
-      }
-
-      .glass-card {
-        padding: 2.2rem 1.7rem 2.35rem;
-      }
-
-      .story-inner {
-        grid-template-columns: minmax(0, 1fr);
-        padding: 1.8rem 1.6rem 2rem;
-      }
-
-      .story-photos-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
     @media (max-width: 640px) {
-      .hero {
-        padding: 2.5rem 1.25rem 3.2rem;
+      .main-phrase::before,
+      .main-phrase::after {
+        display: none;
       }
-
-      .glass-card {
-        padding: 2rem 1.4rem 2.1rem;
-        border-radius: 20px;
-      }
-
-      .name-title {
-        font-size: 3.1rem;
-      }
-
-      .subtitle {
-        font-size: 0.8rem;
-        letter-spacing: 0.23em;
-      }
-
       .main-phrase {
-        font-size: 0.98rem;
-        max-width: 100%;
-      }
-
-      .photo-frame {
-        width: min(320px, 90vw);
-        border-radius: 22px;
-      }
-
-      .story-inner {
-        border-radius: 18px;
+        font-size: 0.95rem;
+        padding: 0 0.4rem;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Camada de fundo -->
+  <!-- Fundo -->
   <div class="background-layer">
     <div class="background-orb orb-1"></div>
     <div class="background-orb orb-2"></div>
-    <div class="background-orb orb-3"></div>
   </div>
 
-  <!-- Camada de corações / palavras flutuantes -->
+  <!-- Corações / palavras -->
   <div class="floating-layer" aria-hidden="true">
     <div class="floating-heart" style="left: 10%; animation-duration: 18s; animation-delay: 0s;">❤</div>
     <div class="floating-heart" style="left: 80%; animation-duration: 20s; animation-delay: 3s;">❤</div>
@@ -675,197 +344,116 @@
     <div class="floating-word" style="left: 55%; animation-duration: 21s; animation-delay: 10s;">NÓS DOIS</div>
   </div>
 
-  <!-- Seção principal -->
-  <main class="hero">
-    <div class="hero-inner">
-      <!-- Coluna de fotos -->
-      <div class="photo-column">
-        <div class="photo-frame">
-          <div class="photo-inner">
-            <div class="photo-slider">
-              <!--
-                ⬇️ TROCAR AS FOTOS AQUI
-                - Agora está usando o arquivo "ft1.jpeg.jpeg".
-                - Se você subir mais fotos (ft2, ft3...), é só colocar no array lá embaixo no JavaScript.
-              -->
-              <img
-                id="sliderImage"
-                src="img/ft1.jpeg.jpeg"
-                alt="Foto de Pietra"
-              />
-              <div class="photo-overlay-gradient"></div>
-              <div class="photo-caption">
-                <span class="photo-caption-main">Um instante com a Pietra</span>
-                <span class="photo-caption-sub">coleção de memórias</span>
-              </div>
-              <div class="photo-tag">para sempre</div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- Conteúdo central -->
+  <main class="content">
+    <h1 class="name-title">Pietra</h1>
+    <p class="subtitle">UM CANTINHO QUE EXISTE SÓ POR SUA CAUSA</p>
 
-      <!-- Cartão de texto -->
-      <section class="glass-card" aria-label="Mensagem especial para Pietra">
-        <div class="glass-content">
-          <div class="pill-label">
-            <span class="pill-dot"></span>
-            <span>UMA PÁGINA SÓ PARA ELA</span>
-          </div>
+    <!--
+      ⬇️ TROQUE ESSA FRASE SE QUISER
+    -->
+    <p class="main-phrase">
+      Aqui as lembranças dançam junto com a sua foto, só pra lembrar que o mundo fica mais bonito quando tem você.
+    </p>
 
-          <h1 class="name-title">Pietra</h1>
-          <p class="subtitle">UM LUGAR ONDE VOCÊ É O UNIVERSO INTEIRO</p>
+    <div class="music-wrapper">
+      <!-- Botão da música -->
+      <button id="musicButton" class="music-button" type="button">
+        <span class="music-pulse">
+          <span class="music-pulse-inner"></span>
+        </span>
+        <span>Ouvir nossa música</span>
+      </button>
 
-          <!--
-            ⬇️ FRASE PRINCIPAL
-            Troque o texto abaixo pela frase que você quiser.
-            Exemplo: "Você é o meu lugar favorito no mundo."
-          -->
-          <p class="main-phrase">
-            [SUA FRASE PRINCIPAL AQUI]
-          </p>
-
-          <p class="support-text">
-            Cada foto, cada detalhe, cada música aqui foi escolhida pensando em você.
-            Este é um cantinho reservado só para lembrar o quanto você é especial.
-          </p>
-
-          <div class="actions-row">
-            <!--
-              ⬇️ MÚSICA
-              - O botão abaixo é controlado via JavaScript.
-              - O navegador pode bloquear o autoplay.
-              - Troque o arquivo de música no elemento <audio> mais abaixo.
-            -->
-            <button id="musicButton" class="music-button" type="button">
-              <span class="music-pulse">
-                <span class="music-pulse-inner"></span>
-              </span>
-              <span>Carregando música...</span>
-            </button>
-
-            <p class="hint-text">
-              Algumas vezes o navegador precisa de um <span>clique seu</span> para a música começar. 💫
-            </p>
-          </div>
-        </div>
-      </section>
+      <p class="hint-text">
+        Se a música não começar sozinha, é só <span>tocar no botão</span>. 🎵
+      </p>
     </div>
   </main>
 
-  <!-- Seção de história / texto extra -->
-  <section class="story-section">
-    <div class="story-inner">
-      <div>
-        <p class="story-text-title">CADA FOTO, UMA RECORDação</p>
-        <h2 class="story-heading">Um pedacinho da nossa história com você</h2>
-        <p class="story-text">
-          Aqui, cada imagem guarda um sorriso, um olhar e um momento que merecia ser lembrado com carinho.
-          Este site existe para que, em qualquer dia e a qualquer hora, você possa voltar aqui e
-          lembrar que é imensamente querida. E que, de um jeito muito simples, alguém decidiu transformar
-          tudo isso em uma pequena constelação feita só de você.
-        </p>
-      </div>
-
-      <div class="story-photos-grid" aria-hidden="true">
-        <div class="story-photo">
-          <div class="story-photo-inner">
-            <span>Primeiro sorriso</span>
-          </div>
-        </div>
-        <div class="story-photo">
-          <div class="story-photo-inner">
-            <span>Um momento qualquer que virou inesquecível</span>
-          </div>
-        </div>
-        <div class="story-photo">
-          <div class="story-photo-inner">
-            <span>Seu jeito único de existir</span>
-          </div>
-        </div>
-        <div class="story-photo">
-          <div class="story-photo-inner">
-            <span>O brilho nos olhos</span>
-          </div>
-        </div>
-        <div class="story-photo">
-          <div class="story-photo-inner">
-            <span>Pequenas coisas que viram tudo</span>
-          </div>
-        </div>
-        <div class="story-photo">
-          <div class="story-photo-inner">
-            <span>O mundo fica mais bonito com você</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Rodapé simples -->
+  <!-- Rodapé -->
   <footer class="footer">
     feito com carinho para <span>Pietra</span>
   </footer>
 
   <!--
     ⬇️ ÁUDIO
-    - Troque "musica.mp3" pelo caminho do seu arquivo de música.
-    - Exemplo: "nossa-musica.mp3" ou "audio/nossa-musica.mp3"
+    - Coloque o arquivo "musica.mp3" na MESMA pasta do index.html.
+    - Se quiser usar outro nome ou pasta, troque o caminho em src.
   -->
   <audio id="backgroundMusic" loop>
-    <source src="Natiruts - Sorri, Sou Rei (Áudio Oficial) ft. Claudia Leitte" type="audio/mpeg" />
+    <source src="musica.mp3" type="audio/mpeg" />
     Seu navegador não suporta áudio em HTML5.
   </audio>
 
   <script>
-    // ========== SLIDESHOW DE FOTOS ==========
+    // ========== FOTOS FLUTUANDO ALEATORIAMENTE ==========
     (function () {
       // ⬇️ ADICIONE SUAS FOTOS AQUI
-      // Agora está usando "img/ft1.jpeg.jpeg".
+      // LEMBRANDO: elas precisam existir na pasta /img do repositório.
       const photos = [
         "img/ft1.jpeg.jpeg",
-        // Se você subir mais, é só ir acrescentando aqui:
         // "img/ft2.jpeg.jpeg",
         // "img/ft3.jpeg.jpeg",
       ];
 
-      const sliderImage = document.getElementById("sliderImage");
-      if (!sliderImage || !photos.length) return;
+      if (!photos.length) return;
 
-      let currentIndex = 0;
-      let isTransitioning = false;
+      const MAX_PHOTOS_ON_SCREEN = 6;
+      let currentOnScreen = 0;
 
-      function showNextPhoto() {
-        if (isTransitioning) return;
-        isTransitioning = true;
+      function createFloatingPhoto() {
+        if (currentOnScreen >= MAX_PHOTOS_ON_SCREEN) return;
 
-        const nextIndex = (currentIndex + 1) % photos.length;
-        const img = sliderImage;
+        const img = document.createElement("img");
+        const randomSrc = photos[Math.floor(Math.random() * photos.length)];
+        img.src = randomSrc;
+        img.alt = "Foto de Pietra";
+        img.className = "photo-floating";
 
-        // Fade out
-        img.classList.remove("fade-in");
-        img.classList.add("fade-out");
+        // Tamanho aleatório
+        const minSize = 120;
+        const maxSize = 260;
+        const size = Math.floor(Math.random() * (maxSize - minSize) + minSize);
+        img.style.width = size + "px";
+        img.style.height = size + "px";
 
-        setTimeout(() => {
-          img.src = photos[nextIndex];
-          currentIndex = nextIndex;
+        // Posição aleatória dentro da tela
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
 
-          // Fade in
-          img.classList.remove("fade-out");
-          img.classList.add("fade-in");
+        const maxLeft = Math.max(vw - size - 20, 0);
+        const maxTop = Math.max(vh - size - 40, 0);
 
-          setTimeout(() => {
-            isTransitioning = false;
-          }, 1000);
-        }, 900);
+        const left = Math.random() * maxLeft;
+        const top = Math.random() * maxTop;
+
+        img.style.left = left + "px";
+        img.style.top = top + "px";
+
+        // Duração e atraso aleatórios
+        const duration = 10 + Math.random() * 8; // entre 10 e 18s
+        const delay = Math.random() * 3; // até 3s
+
+        img.style.animationDuration = duration + "s";
+        img.style.animationDelay = delay + "s";
+
+        img.addEventListener("animationend", () => {
+          img.remove();
+          currentOnScreen--;
+        });
+
+        document.body.appendChild(img);
+        currentOnScreen++;
       }
 
-      // Inicia animação suave
-      sliderImage.classList.add("fade-in");
-
-      // Só roda o intervalo se tiver mais de uma foto
-      if (photos.length > 1) {
-        setInterval(showNextPhoto, 4000); // troca a cada 4 segundos
+      // Cria algumas fotos iniciais
+      for (let i = 0; i < 3; i++) {
+        setTimeout(createFloatingPhoto, i * 1000);
       }
+
+      // Vai criando novas ao longo do tempo
+      setInterval(createFloatingPhoto, 2500);
     })();
 
     // ========== CONTROLE DA MÚSICA ==========
@@ -878,38 +466,30 @@
 
       function setButtonState(isPlaying) {
         if (!buttonTextSpan) return;
-        if (isPlaying) {
-          buttonTextSpan.textContent = "Pausar música";
-        } else {
-          buttonTextSpan.textContent = "Ouvir nossa música";
-        }
+        buttonTextSpan.textContent = isPlaying ? "Pausar música" : "Ouvir nossa música";
       }
 
-      async function tryAutoplay() {
+      // Tenta autoplay ao carregar
+      window.addEventListener("load", async () => {
         try {
-          // Alguns navegadores permitem autoplay se o áudio estiver sem som no começo.
+          // Alguns navegadores permitem autoplay se o áudio estiver mudo no começo
           audio.muted = true;
           await audio.play();
           audio.muted = false;
-          musicButton.classList.add("visible");
           setButtonState(true);
-        } catch (error) {
-          // Autoplay bloqueado: pede interação do usuário.
-          musicButton.classList.add("visible");
+        } catch (err) {
+          // Se der erro, o navegador bloqueou autoplay – o botão vai ficar esperando clique
           setButtonState(false);
         }
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        tryAutoplay();
       });
 
+      // Clique no botão: play/pause
       musicButton.addEventListener("click", async () => {
         if (audio.paused) {
           try {
             await audio.play();
             setButtonState(true);
-          } catch (error) {
+          } catch (err) {
             setButtonState(false);
           }
         } else {
